@@ -1,9 +1,9 @@
 About
 =====
 
-FXMCAPI aims to create a usable Python interface ForexConnect C++ API.
+FXCM-API aims to create a usable Python interface to the ForexConnect C++ API.
 
-The plan is to model many of the available methods from the ForexConnect C++ API into small  and make them available to Python code by using Boost::Python to compile into a Python module.
+The plan is to model many of the available methods from the ForexConnect C++ API into small modular classes and make them available to Python code by using Boost::Python to compile into a Python module.
  
 
   
@@ -26,17 +26,17 @@ Example Installation
     # Get all the include files
     tar zxvf ForexConnectAPI-1.3.1-Linux-x86_64.tar.gz
     cd ForexConnectAPI-1.3.1-Linux-x86_64/
-    cp -a include/* &lt;ProjectDirectory&gt;/FXCMAPI/include/
-    cp -a samples/cpp/sample_tools/include/* &lt;ProjectDirectory&gt;/FXCMAPI/include/
+    cp -a include/* <ProjectDirectory>;/FXCM-API/include/
+    cp -a samples/cpp/sample_tools/include/* <ProjectDirectory>/FXCM-API/include/
 
     # Build and copy the shared libraries
-    cp -L lib/*.so &lt;ProjectDirectory&gt;/FXCMAPI/lib/
+    cp -L lib/*.so <ProjectDirectory>;/FXCM-API/lib/
     cd samples/cpp/sample_tools/
     ./fxbuild.sh
-    cp lib/libsample_tools.so &lt;ProjectDirectory&gt;/FXCMAPI/lib/
+    cp lib/libsample_tools.so <ProjectDirectory>;/FXCM-API/lib/
 
-    # Optional - But recomended
-    cd &lt;ProjectDirectory&gt;/FXCMAPI/lib/
+    # Optional - But recommended
+    cd <ProjectDirectory>;/FXCM-API/lib/
     sudo cp *.so /usr/lib
     
 Configuration
