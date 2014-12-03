@@ -14,6 +14,11 @@ public:
 	OptionParams();
 	virtual ~OptionParams();
 
+	DATE getDateFrom() const;
+	void setDateFrom(std::string isoDateFrom);
+	DATE getDateTo() const;
+	void setDateTo(std::string isoDateFrom);
+
 	const std::string& getAccount() const {
 		return mAccount;
 	}
@@ -36,22 +41,6 @@ public:
 
 	void setContingencyId(const std::string& contingencyId) {
 		mContingencyID = contingencyId;
-	}
-
-	DATE getDateFrom() const {
-		return mDateFrom;
-	}
-
-	void setDateFrom(DATE dateFrom) {
-		mDateFrom = dateFrom;
-	}
-
-	DATE getDateTo() const {
-		return mDateTo;
-	}
-
-	void setDateTo(DATE dateTo) {
-		mDateTo = dateTo;
 	}
 
 	const std::string& getExpDate() const {
@@ -162,6 +151,7 @@ private:
     std::string mOrderType;
     std::string mStatus;
     std::string mExpDate;
+    std::string dateStringFormat = "%Y-%m-%dT%H:%M:%S";
     int mLots;
     DATE mDateFrom;
     DATE mDateTo;

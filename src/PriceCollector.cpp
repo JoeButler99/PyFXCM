@@ -13,7 +13,14 @@ PriceCollector::PriceCollector(SessionHandler & sh, OptionParams & op) : mSessio
 PriceCollector::~PriceCollector() {}
 
 bool PriceCollector::hasValidOptions() {
-	return false;
+	if (!mOptionParams.getInstrument().empty() &&
+		!mOptionParams.getTimeframe().empty()  &&
+		!isnan(mOptionParams.getDateFrom())    &&
+		!isnan(mOptionParams.getDateTo()) ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 bool PriceCollector::collectData() {

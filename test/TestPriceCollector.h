@@ -53,7 +53,29 @@ protected:
 
 	void testHasValidOptions() {
 		std::cerr << "PriceCollector:\t" <<  __func__ << std::endl;
-		CPPUNIT_ASSERT(false);
+		SessionHandler demoSession(demoLoginParams);
+		OptionParams   options;
+		options.setInstrument("EUR/USD");
+		PriceCollector priceCollector = PriceCollector(demoSession,options);
+
+		CPPUNIT_ASSERT(!priceCollector.hasValidOptions());
+
+		OptionParams   options2;
+		options2.setInstrument("EUR/USD");
+		options2.setTimeframe("H1");
+		options2.setDateFrom("2007-03-04T21:08:12");
+		options2.setDateTo("2008-03-04T21:08:13");
+		PriceCollector priceCollector2 = PriceCollector(demoSession,options2);
+		CPPUNIT_ASSERT(priceCollector2.hasValidOptions());
+
+
+		OptionParams   options3;
+		options3.setInstrument("EUR/USD");
+		options3.setTimeframe("H1");
+		options3.setDateTo("2008-03-04T21:08:13");
+		PriceCollector priceCollector3 = PriceCollector(demoSession,options3);
+		CPPUNIT_ASSERT(!priceCollector3.hasValidOptions());
+
 	}
 
 	void testCollectData() {

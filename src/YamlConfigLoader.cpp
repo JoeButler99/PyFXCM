@@ -13,6 +13,8 @@ YamlConfigLoader::~YamlConfigLoader() {}
 
 
 std::string YamlConfigLoader::getKey(std::string keyName) {
+	// TODO - This whole method is pretty sloppy, we should probably load the lot into a map
+	// and search from there.
 	if(!yaml_parser_initialize(&parser)){
 		throw FXCMAPIException("Unable to initialise YAML Parser.",1,__func__,__FILE__,__LINE__);
 	}

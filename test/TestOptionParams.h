@@ -16,7 +16,6 @@
 #include "../src/stdafx.h"
 #include "../src/OptionParams.h"
 
-
 class TestOptionParams : public CppUnit::TestFixture {
 public:
 	TestOptionParams(){}
@@ -44,8 +43,8 @@ protected:
 		CPPUNIT_ASSERT(op.getStatus() == "");
 		CPPUNIT_ASSERT(op.getExpDate() == "");
 		CPPUNIT_ASSERT(op.getLots() == 0);
-		CPPUNIT_ASSERT(op.getDateFrom() == 0);
-		CPPUNIT_ASSERT(op.getDateTo() == 0);
+		CPPUNIT_ASSERT(isnan(op.getDateFrom()));
+		CPPUNIT_ASSERT(isnan(op.getDateTo()));
 		CPPUNIT_ASSERT(op.getRate() == 0);
 		CPPUNIT_ASSERT(op.getRateStop() == 0);
 		CPPUNIT_ASSERT(op.getRateLimit() == 0);
@@ -67,8 +66,8 @@ protected:
 		op.setStatus("LIVE");
 		op.setExpDate("25");
 		op.setLots(10);
-		op.setDateFrom(22);
-		op.setDateTo(33);
+		op.setDateFrom("2007-03-04T21:08:12");
+		op.setDateTo("2008-03-04T21:08:12");
 		op.setRate(1.0);
 		op.setRateStop(0.9);
 		op.setRateLimit(1.1);
@@ -86,12 +85,13 @@ protected:
 		CPPUNIT_ASSERT(op.getStatus() == "LIVE");
 		CPPUNIT_ASSERT(op.getExpDate() == "25");
 		CPPUNIT_ASSERT(op.getLots() == 10);
-		CPPUNIT_ASSERT(op.getDateFrom() == 22);
-		CPPUNIT_ASSERT(op.getDateTo() == 33);
+		CPPUNIT_ASSERT_DOUBLES_EQUAL(39145.880694444,op.getDateFrom(),0.00001);
+		CPPUNIT_ASSERT_DOUBLES_EQUAL(39511.880694444,op.getDateTo(),0.00001);
 		CPPUNIT_ASSERT(op.getRate() == 1.0);
 		CPPUNIT_ASSERT(op.getRateStop() == 0.9);
 		CPPUNIT_ASSERT(op.getRateLimit() == 1.1);
 	}
+
 };
 
 

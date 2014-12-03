@@ -27,3 +27,4 @@
 #include "../include/sample_tools.h"
 #include "FXCMAPIException.h"
 
+double const NaN = std::numeric_limits<double>::quiet_NaN();
