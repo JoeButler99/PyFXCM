@@ -95,7 +95,7 @@ protected:
 		CPPUNIT_ASSERT(priceCollector.hasValidOptions());
 		CPPUNIT_ASSERT(priceCollector.getDataRecords().size() == 0);
 		CPPUNIT_ASSERT(priceCollector.collectData());
-		CPPUNIT_ASSERT(priceCollector.getDataRecords().size() != 0);
+		CPPUNIT_ASSERT(priceCollector.getDataRecords().size() > 0);
 		demoSession.logout();
 	}
 

@@ -7,7 +7,7 @@
 
 #pragma once
 #include "stdafx.h"
-
+#include "Helpers.h"
 
 class OptionParams {
 public:
@@ -135,9 +135,7 @@ public:
 		return mTimeframe;
 	}
 
-	void setTimeframe(const std::string& timeframe) {
-		mTimeframe = timeframe;
-	}
+	void setTimeframe(const std::string& timeframe);
 
 private:
     std::string mInstrument;
@@ -153,9 +151,10 @@ private:
     std::string mExpDate;
     std::string dateStringFormat = "%Y-%m-%dT%H:%M:%S";
     int mLots;
-    DATE mDateFrom;
-    DATE mDateTo;
+    DATE mDateEarliest;
+    DATE mDateLatest;
     double mRate;
     double mRateStop;
     double mRateLimit;
+    static const std::set<std::string> sValidTimeFrames;
 };

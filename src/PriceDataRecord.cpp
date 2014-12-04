@@ -8,7 +8,7 @@
 #include "PriceDataRecord.h"
 
 PriceDataRecord::PriceDataRecord(std::string instrument, DATE startTime,
-		Timeframe timeframe, double bidOpen, double bidHigh, double bidLow,
+		std::string timeframe, double bidOpen, double bidHigh, double bidLow,
 		double bidClose, double askOpen, double askHigh, double askLow,
 		double askClose)
 : mInstrument(instrument), mStartTime(startTime), mTimeframe(timeframe),

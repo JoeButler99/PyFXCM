@@ -1,6 +1,5 @@
 #pragma once
 #include "stdafx.h"
-#include "Timeframe.h"
 /*
  * PriceDataRecord.h
  *
@@ -13,12 +12,12 @@ class PriceDataRecord {
 private:
 	const std::string mInstrument;
 	const DATE mStartTime;
-	const Timeframe mTimeframe;
+	const std::string mTimeframe;
 	const double mBidOpen, mBidHigh, mBidLow, mBidClose;
 	const double mAskOpen, mAskHigh, mAskLow, mAskClose;
 
 public:
-	PriceDataRecord(std::string instrument, DATE startTime, Timeframe timeframe,
+	PriceDataRecord(std::string instrument, DATE startTime, std::string timeframe,
 					double bidOpen, double bidHigh, double bidLow, double bidClose,
 					double askOpen, double askHigh, double askLow, double askClose);
 	virtual ~PriceDataRecord();
@@ -64,8 +63,9 @@ public:
 		return mStartTime;
 	}
 
-	const Timeframe& getTimeframe() const {
+	const std::string& getTimeframe() const {
 		return mTimeframe;
 	}
+
 };
 

@@ -18,6 +18,7 @@ private:
 	SessionHandler & mSessionHandler;
 	OptionParams   & mOptionParams;
 	std::vector<PriceDataRecord> mDataRecords;
+	void assignDataRecords(IO2GSession *session, IO2GResponse *response);
 public:
 	PriceCollector(SessionHandler & sh, OptionParams & op);
 	virtual ~PriceCollector();

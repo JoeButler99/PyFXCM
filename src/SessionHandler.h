@@ -21,12 +21,16 @@ public:
 	void logout();
 	bool isConnected();
 
-	const IO2GSession * getSession() const {
+	IO2GSession * getSession() {
 		return session;
 	}
 
-	const SessionStatusListener * getStatusListener() const {
+	SessionStatusListener * getStatusListener() {
 		return statusListener;
+	}
+
+	ResponseListener * getResponseListener() {
+		return responseListener;
 	}
 
 	void attachResponseListener();

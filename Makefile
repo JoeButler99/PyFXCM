@@ -32,11 +32,8 @@ sources: $(BUILD)YamlConfigLoader.o $(BUILD)PriceCollector.o $(BUILD)SessionHand
 $(BUILD)PriceCollector.o: $(BUILD)PriceDataRecord.o $(BUILD)ResponseListener.o
 	$(CC) $(CCFLAGS) $(SRC)PriceCollector.cpp -o $(BUILD)PriceCollector.o
 
-$(BUILD)PriceDataRecord.o: $(BUILD)Timeframe.o
+$(BUILD)PriceDataRecord.o:
 	$(CC) $(CCFLAGS) $(SRC)PriceDataRecord.cpp -o $(BUILD)PriceDataRecord.o
-
-$(BUILD)Timeframe.o:
-	$(CC) $(CCFLAGS) $(SRC)Timeframe.cpp -o $(BUILD)Timeframe.o
 
 $(BUILD)SessionHandler.o: $(BUILD)SessionStatusListener.o
 	$(CC) $(CCFLAGS) $(SRC)SessionHandler.cpp -o $(BUILD)SessionHandler.o

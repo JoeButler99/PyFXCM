@@ -24,7 +24,8 @@ public:
 	static CppUnit::Test *suite() {
 		CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestOptionParams");
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestOptionParams>("Test constructor",&TestOptionParams::testConstructor));
-		suiteOfTests->addTest(new CppUnit::TestCaller<TestOptionParams>("Test constructor",&TestOptionParams::testGettersAndSetters));
+		suiteOfTests->addTest(new CppUnit::TestCaller<TestOptionParams>("Test Getters and Setters",&TestOptionParams::testGettersAndSetters));
+		suiteOfTests->addTest(new CppUnit::TestCaller<TestOptionParams>("Test Invalid Timeframes",&TestOptionParams::testInvalidTimeframes));
 		return suiteOfTests;
 	}
 protected:
@@ -60,7 +61,7 @@ protected:
 		op.setOrderId("9876");
 		op.setPrimaryId("5678");
 		op.setSecondaryId("8765");
-		op.setTimeframe("H");
+		op.setTimeframe("H1");
 		op.setAccount("1111");
 		op.setOrderType("MARKET");
 		op.setStatus("LIVE");
@@ -79,7 +80,7 @@ protected:
 		CPPUNIT_ASSERT(op.getOrderId() == "9876");
 		CPPUNIT_ASSERT(op.getPrimaryId() == "5678");
 		CPPUNIT_ASSERT(op.getSecondaryId() == "8765");
-		CPPUNIT_ASSERT(op.getTimeframe() == "H");
+		CPPUNIT_ASSERT(op.getTimeframe() == "H1");
 		CPPUNIT_ASSERT(op.getAccount() == "1111");
 		CPPUNIT_ASSERT(op.getOrderType() == "MARKET");
 		CPPUNIT_ASSERT(op.getStatus() == "LIVE");
@@ -92,6 +93,11 @@ protected:
 		CPPUNIT_ASSERT(op.getRateLimit() == 1.1);
 	}
 
+
+	void testInvalidTimeframes() {
+		std::cerr << "OptionParams:\t\t" <<  __func__ << std::endl;
+		CPPUNIT_ASSERT(false);
+	}
 };
 
 

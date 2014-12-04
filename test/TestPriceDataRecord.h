@@ -33,13 +33,12 @@ protected:
 		std::cerr << "PriceDataRecord:\t" <<  __func__ << std::endl;
 		// TODO - Need to check the right date format, EPOCH in microseconds??
 		DATE startTime(1414645200000);
-		const Timeframe t(Timeframe::H1);
 
-		PriceDataRecord pdr1("EUR/USD",startTime,t,1.0,1.1,0.9,1.05,1.0,1.1,0.9,1.05);
+		PriceDataRecord pdr1("EUR/USD",startTime,"m5",1.0,1.1,0.9,1.05,1.0,1.1,0.9,1.05);
 
 		CPPUNIT_ASSERT(pdr1.getInstrument() == "EUR/USD");
 		CPPUNIT_ASSERT(pdr1.getStartTime() == startTime);
-		CPPUNIT_ASSERT(pdr1.getTimeframe().getChosenTimeframe() == Timeframe::H1 );
+		CPPUNIT_ASSERT(pdr1.getTimeframe() == "m5" );
 		CPPUNIT_ASSERT(pdr1.getBidOpen() == 1.0);
 		CPPUNIT_ASSERT(pdr1.getBidHigh() == 1.1);
 		CPPUNIT_ASSERT(pdr1.getBidLow() == 0.9);
