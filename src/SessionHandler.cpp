@@ -17,17 +17,46 @@ SessionHandler::SessionHandler(LoginParams lp) : loginParams(lp),
 SessionHandler::~SessionHandler() {}
 
 bool SessionHandler::login() {
-	statusListener->reset();
-	session->login(loginParams.getLogin(),loginParams.getPassword(),loginParams.getURL(),loginParams.getConnection());
-	return statusListener->waitEvents() && statusListener->isConnected();
+	if (!isConnected()) {
+		Helpers::debugText(loginParams.getURL());
+		Helpers::debugText(loginParams.getConnection());
+
+		statusListener->reset();
+		session->login(loginParams.getLogin(),loginParams.getPassword(),loginParams.getURL(),loginParams.getConnection());
+		statusListener->waitEvents();
+		return statusListener->isConnected();
+	} else {
+		return true;
+	}
+
 }
 
 void SessionHandler::logout() {
-	statusListener->reset();
-	session->logout();
-	statusListener->waitEvents();
+	if (isConnected()) {
+		statusListener->reset();
+		session->logout();
+		statusListener->waitEvents();
+	}
 }
 
 bool SessionHandler::isConnected() {
 	return statusListener->isConnected();
+}
+
+void SessionHandler::attachResponseListener() {
+	if(responseListener == 0) {
+		responseListener = new ResponseListener(session);
+		session->subscribeResponse(responseListener);
+	} else {
+		throw FXCMAPIException("Cannot reassign Response Listener.",1,__func__,__FILE__,__LINE__);
+	}
+}
+
+void SessionHandler::releaseResponseListener() {
+	if(responseListener != 0) {
+        session->unsubscribeResponse(responseListener);
+        responseListener->release();
+	} else {
+		throw FXCMAPIException("Cannot release NULL Response Listener.",1,__func__,__FILE__,__LINE__);
+	}
 }

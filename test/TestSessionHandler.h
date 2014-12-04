@@ -35,7 +35,8 @@ public:
 	static CppUnit::Test *suite() {
 		CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestSessionHandler");
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestSessionHandler>("Test constructor",&TestSessionHandler::testConstructor));
-		suiteOfTests->addTest(new CppUnit::TestCaller<TestSessionHandler>("Test constructor",&TestSessionHandler::testLoginAndLogout));
+		suiteOfTests->addTest(new CppUnit::TestCaller<TestSessionHandler>("Test Login Logout",&TestSessionHandler::testLoginAndLogout));
+		suiteOfTests->addTest(new CppUnit::TestCaller<TestSessionHandler>("Test ResponseListener",&TestSessionHandler::testResponseListener));
 		return suiteOfTests;
 	}
 protected:
@@ -63,8 +64,17 @@ protected:
 		demoSession.logout();
 		CPPUNIT_ASSERT(!realSession.isConnected());
 		CPPUNIT_ASSERT(!demoSession.isConnected());
+	}
 
-
+	void testResponseListener() {
+		std::cerr << "SessionHandler:\t\t" <<  __func__ << std::endl;
+		SessionHandler demoSession(demoLoginParams);
+		demoSession.login();
+		CPPUNIT_ASSERT(demoSession.isConnected());
+		CPPUNIT_ASSERT_NO_THROW(demoSession.attachResponseListener());
+		CPPUNIT_ASSERT_NO_THROW(demoSession.releaseResponseListener());
+		demoSession.logout();
+		CPPUNIT_ASSERT(!demoSession.isConnected());
 	}
 };
 

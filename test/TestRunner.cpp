@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
     runner.addTest(TestPriceDataRecord::suite());
     runner.addTest(TestLoginParams::suite());
     runner.addTest(TestOptionParams::suite());
-    runner.addTest(TestSessionHandler::suite());
+    //runner.addTest(TestSessionHandler::suite());
     runner.addTest(TestPriceCollector::suite());
 
 

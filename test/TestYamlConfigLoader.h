@@ -27,7 +27,7 @@ public:
 	static CppUnit::Test *suite() {
 		CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestYamlConfigLoader");
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestYamlConfigLoader>("Test constructor",&TestYamlConfigLoader::testConstructor));
-		suiteOfTests->addTest(new CppUnit::TestCaller<TestYamlConfigLoader>("Test constructor",&TestYamlConfigLoader::testGetValues));
+		suiteOfTests->addTest(new CppUnit::TestCaller<TestYamlConfigLoader>("Test get values",&TestYamlConfigLoader::testGetValues));
 		return suiteOfTests;
 	}
 protected:
@@ -43,22 +43,18 @@ protected:
 
 		// Check good file good key
 		YamlConfigLoader configLoader = YamlConfigLoader("config/config.yaml");
-		std::cerr << "YamlConfigLoader:\t" <<  __func__ << std::endl;
 		CPPUNIT_ASSERT(!configLoader.getKey("demo_account_username").empty());
-		std::cerr << "YamlConfigLoader:\t" <<  __func__ << std::endl;
 		CPPUNIT_ASSERT(!configLoader.getKey("demo_account_password").empty());
 		CPPUNIT_ASSERT(configLoader.getKey("demo_account_connectiontype") == "Demo");
 		CPPUNIT_ASSERT(!configLoader.getKey("real_account_username").empty());
 		CPPUNIT_ASSERT(!configLoader.getKey("real_account_password").empty());
 		CPPUNIT_ASSERT(configLoader.getKey("real_account_connectiontype") == "Real");
 
-		std::cerr << "YamlConfigLoader:\t" <<  __func__ << std::endl;
 		// Check good file bad key
 		configLoader = YamlConfigLoader("config/config.yaml");
 		CPPUNIT_ASSERT(configLoader.getKey("something_non_existant").empty());
 		CPPUNIT_ASSERT(configLoader.getKey("something_non_existant2").empty());
 
-		std::cerr << "YamlConfigLoader:\t" <<  __func__ << std::endl;
 		// Check bad file
 		configLoader = YamlConfigLoader("config/config.yaml.madeupexamplewhichiswrong");
 		CPPUNIT_ASSERT_THROW(configLoader.getKey("MadeUpKey"),FXCMAPIException);

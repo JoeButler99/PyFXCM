@@ -2,7 +2,9 @@
 demo_account_username: "D123456789"
 demo_account_password: "1234"
 demo_account_connectiontype: "Demo"
+demo_account_url: "http://www.fxcorporate.com/Hosts.jsp"
 
 real_account_username: "123456789"
 real_account_password: "realpassword"
 real_account_connectiontype: "Real"
+real_account_url: "http://www.fxcorporate.com/Hosts.jsp"

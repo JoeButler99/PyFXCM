@@ -11,6 +11,7 @@
 #include "OptionParams.h"
 #include "PriceDataRecord.h"
 #include "SessionHandler.h"
+#include "Helpers.h"
 
 class PriceCollector {
 private:

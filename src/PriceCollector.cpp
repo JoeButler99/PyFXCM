@@ -24,12 +24,18 @@ bool PriceCollector::hasValidOptions() {
 }
 
 bool PriceCollector::collectData() {
-	// TODO - Could this move to a general functions / tools global class
-	if (!mSessionHandler.isConnected()) {
-		mSessionHandler.login();
-		if(!mSessionHandler.isConnected()) {
-			throw FXCMAPIException("Unable to connect",1,__func__,__FILE__,__LINE__);
-		}
+	// Make sure we are connected
+	if (mSessionHandler.login()) {
+		Helpers::debugText("Attach Response Listener");
+		mSessionHandler.attachResponseListener();
+
+
+
+		mSessionHandler.releaseResponseListener();
+		Helpers::debugText("Release Response Listener");
+	} else {
+		Helpers::debugText("Connection attempt failed");
+		throw FXCMAPIException("Unable to connect to FXCM.",1,__func__,__FILE__,__LINE__);
 	}
 
 

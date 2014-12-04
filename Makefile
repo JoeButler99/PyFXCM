@@ -29,7 +29,7 @@ $(BUILD)TestRunner.o: sources
 sources: $(BUILD)YamlConfigLoader.o $(BUILD)PriceCollector.o $(BUILD)SessionHandler.o
 
 
-$(BUILD)PriceCollector.o: $(BUILD)PriceDataRecord.o
+$(BUILD)PriceCollector.o: $(BUILD)PriceDataRecord.o $(BUILD)ResponseListener.o
 	$(CC) $(CCFLAGS) $(SRC)PriceCollector.cpp -o $(BUILD)PriceCollector.o
 
 $(BUILD)PriceDataRecord.o: $(BUILD)Timeframe.o
@@ -40,6 +40,9 @@ $(BUILD)Timeframe.o:
 
 $(BUILD)SessionHandler.o: $(BUILD)SessionStatusListener.o
 	$(CC) $(CCFLAGS) $(SRC)SessionHandler.cpp -o $(BUILD)SessionHandler.o
+	
+$(BUILD)ResponseListener.o:
+	$(CC) $(CCFLAGS) $(SRC)ResponseListener.cpp -o $(BUILD)ResponseListener.o
 
 $(BUILD)SessionStatusListener.o: $(BUILD)LoginParams.o $(BUILD)OptionParams.o
 	$(CC) $(CCFLAGS) $(SRC)SessionStatusListener.cpp -o $(BUILD)SessionStatusListener.o

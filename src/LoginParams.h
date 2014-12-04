@@ -11,16 +11,16 @@ public:
     			std::string URL = "http://www.fxcorporate.com/Hosts.jsp");
     ~LoginParams(void);
 
-    const char *getLogin();
-    const char *getPassword();
-    const char *getURL();
-    const char *getConnection();
+    const char *getLogin() const;
+    const char *getPassword() const;
+    const char *getURL() const;
+    const char *getConnection() const;
 
 private:
-    std::string mLogin;
-    std::string mPassword;
-    std::string mURL;
-    std::string mConnection;
+    const std::string mLogin;
+    const std::string mPassword;
+    const std::string mURL;
+    const std::string mConnection;
     static const std::set<std::string> sConnectionTypes;
 };
 

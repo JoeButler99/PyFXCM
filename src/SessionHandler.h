@@ -1,7 +1,4 @@
 #pragma once
-#include "stdafx.h"
-#include "LoginParams.h"
-#include "SessionStatusListener.h"
 /*
  * SessionHandler.h
  *
@@ -9,6 +6,11 @@
  *      Author: joe
  */
 
+#include "stdafx.h"
+#include "LoginParams.h"
+#include "SessionStatusListener.h"
+#include "ResponseListener.h"
+#include "Helpers.h"
 
 
 class SessionHandler {
@@ -18,10 +20,24 @@ public:
 	bool login();
 	void logout();
 	bool isConnected();
+
+	const IO2GSession * getSession() const {
+		return session;
+	}
+
+	const SessionStatusListener * getStatusListener() const {
+		return statusListener;
+	}
+
+	void attachResponseListener();
+
+	void releaseResponseListener();
+
 private:
 	LoginParams & loginParams;
 	IO2GSession * session;
 	SessionStatusListener * statusListener;
+	ResponseListener * responseListener = 0;
 
 };
 
