@@ -39,6 +39,7 @@ public:
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPriceCollector>("Test PriceCollector",&TestPriceCollector::testConstructor));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPriceCollector>("Test PriceCollector",&TestPriceCollector::testHasValidOptions));
 		suiteOfTests->addTest(new CppUnit::TestCaller<TestPriceCollector>("Test PriceCollector",&TestPriceCollector::testCollectData));
+		suiteOfTests->addTest(new CppUnit::TestCaller<TestPriceCollector>("Test PriceCollector",&TestPriceCollector::testGetDataRecords));
 		return suiteOfTests;
 	}
 protected:
@@ -79,6 +80,22 @@ protected:
 	}
 
 	void testCollectData() {
+		std::cerr << "PriceCollector:\t" <<  __func__ << std::endl;
+		SessionHandler demoSession(demoLoginParams);
+		OptionParams   options;
+		options.setInstrument("EUR/USD");
+		options.setTimeframe("H1");
+		options.setDateFrom("2014-01-01T00:00:00");
+		options.setDateTo("2014-02-01T00:00:00");
+		PriceCollector priceCollector = PriceCollector(demoSession,options);
+
+		CPPUNIT_ASSERT(priceCollector.hasValidOptions());
+		CPPUNIT_ASSERT(priceCollector.getDataRecords().size() == 0);
+		CPPUNIT_ASSERT(priceCollector.collectData());
+		CPPUNIT_ASSERT(priceCollector.getDataRecords().size() != 0);
+	}
+
+	void testGetDataRecords() {
 		std::cerr << "PriceCollector:\t" <<  __func__ << std::endl;
 		CPPUNIT_ASSERT(false);
 	}

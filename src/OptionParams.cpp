@@ -28,6 +28,7 @@ void OptionParams::setDateFrom(std::string isoDateFrom) {
 	if (isoDateFrom.empty()) {
 		mDateFrom = NaN;
 	} else {
+		// TODO - Throw FXCMExceptions for bad dates
 		strptime(isoDateFrom.c_str(),dateStringFormat.c_str(),&tmBuf);
 		CO2GDateUtils::CTimeToOleTime(&tmBuf, &mDateFrom);
 	}
@@ -44,6 +45,7 @@ void OptionParams::setDateTo(std::string isoDateTo) {
 	if (isoDateTo.empty()) {
 		mDateTo = NaN;
 	} else {
+		// TODO - Throw FXCMExceptions for bad dates
 		strptime(isoDateTo.c_str(),dateStringFormat.c_str(),&tmBuf);
 		CO2GDateUtils::CTimeToOleTime(&tmBuf, &mDateTo);
 	}

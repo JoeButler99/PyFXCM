@@ -24,5 +24,14 @@ bool PriceCollector::hasValidOptions() {
 }
 
 bool PriceCollector::collectData() {
+	// TODO - Could this move to a general functions / tools global class
+	if (!mSessionHandler.isConnected()) {
+		mSessionHandler.login();
+		if(!mSessionHandler.isConnected()) {
+			throw FXCMAPIException("Unable to connect",1,__func__,__FILE__,__LINE__);
+		}
+	}
+
+
 	return false;
 }

@@ -22,6 +22,10 @@ public:
 	virtual ~PriceCollector();
 	bool hasValidOptions();
 	bool collectData();
+
+	const std::vector<PriceDataRecord>& getDataRecords() const {
+		return mDataRecords;
+	}
 };
 
 #endif /* SRC_PRICECOLLECTOR_H_ */
