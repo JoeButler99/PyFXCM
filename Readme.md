@@ -11,6 +11,7 @@ The plan is to model many of the available methods from the ForexConnect C++ API
 Requirements
 ============
 
+* libyaml development files (for the test config)
 
 
 Installation
@@ -35,9 +36,17 @@ Example Installation
     ./fxbuild.sh
     cp lib/libsample_tools.so <ProjectDirectory>;/FXCM-API/lib/
 
+    # Install the libyaml libraries
+    sudo apt-get install libyaml-dev
+
     # Optional - But recommended
     cd <ProjectDirectory>;/FXCM-API/lib/
     sudo cp *.so /usr/lib
+    
+    # Test build
+    make clean test
+
+
     
 Configuration
 =============
