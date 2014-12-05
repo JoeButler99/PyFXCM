@@ -96,7 +96,15 @@ protected:
 
 	void testInvalidTimeframes() {
 		std::cerr << "OptionParams:\t\t" <<  __func__ << std::endl;
-		CPPUNIT_ASSERT(false);
+		OptionParams op;
+		op.setTimeframe("m17");
+		CPPUNIT_ASSERT(op.getTimeframe() == "");
+		op.setTimeframe("H1");
+		CPPUNIT_ASSERT(op.getTimeframe() == "H1");
+		op.setTimeframe("m5");
+		CPPUNIT_ASSERT(op.getTimeframe() == "m5");
+		op.setTimeframe("blahblahblah");
+		CPPUNIT_ASSERT(op.getTimeframe() == "");
 	}
 };
 

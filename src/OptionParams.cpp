@@ -58,6 +58,7 @@ void OptionParams::setTimeframe(const std::string& timeframe) {
 		mTimeframe = timeframe;
 	} else {
 		Helpers::debugText("Could not set timeframe to: " + timeframe);
+		mTimeframe = "";
 	}
 
 }
