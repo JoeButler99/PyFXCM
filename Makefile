@@ -6,7 +6,7 @@ SRC=src/
 CONF=conf/
 INC=-Iinclude
 LIBS=-Llib -lForexConnect -lfxmsg -lgsexpat -lgstool3 -lhttplib -llog4cplus -lpdas -lsample_tools -lyaml
-CCFLAGS=$(INC) -Wall -Werror -O3 -mfpmath=sse -march=native -c -std=c++11
+CCFLAGS=$(INC) -Wall -Werror -O3 -g -mfpmath=sse -march=native -c -std=c++11
 CPPUNITLINKS=-lcppunit
 	
 #
@@ -17,8 +17,12 @@ test: $(BIN)testRunner
 $(BIN)testRunner: $(BUILD)TestRunner.o
 	$(CC) $(BUILD)*.o $(CPPUNITLINKS) $(LIBS) -o $(BIN)testRunner
 
-$(BUILD)TestRunner.o: sources
+$(BUILD)TestRunner.o: sources $(BUILD)GlobalFXCMConnection.o
 	$(CC) $(CCFLAGS) $(TEST)TestRunner.cpp -o $(BUILD)TestRunner.o
+
+$(BUILD)GlobalFXCMConnection.o: sources
+	$(CC) $(CCFLAGS) $(TEST)GlobalFXCMConnection.cpp -o $(BUILD)GlobalFXCMConnection.o
+
 
 
 

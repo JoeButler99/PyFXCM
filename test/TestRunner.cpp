@@ -38,25 +38,29 @@
 #include "TestPriceCollector.h"
 
 
-
-
 int main(int argc, char **argv) {
+
 
     std::cout << "Creating Test Suites:" << std::endl;
     CppUnit::TextUi::TestRunner runner;
     CppUnit::TestResultCollector result;
 
+
+
+    runner.addTest(TestSessionHandler::suite());
     runner.addTest(TestFXCMAPIException::suite());
     runner.addTest(TestYamlConfigLoader::suite());
     runner.addTest(TestPriceDataRecord::suite());
     runner.addTest(TestLoginParams::suite());
     runner.addTest(TestOptionParams::suite());
-    runner.addTest(TestSessionHandler::suite());
+
     runner.addTest(TestPriceCollector::suite());
 
 
     std::cout<< "Running the unit tests."<< std::endl;
     runner.run("",false,true,false);
+
+    GlobalFXCMConnection::Instance()->getSessionHandler()->logout();
 
     return runner.result().wasSuccessful() ? 0 : 1;
 }

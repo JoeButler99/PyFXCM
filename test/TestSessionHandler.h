@@ -15,7 +15,7 @@
 #include <cppunit/TestCase.h>
 #include "../src/stdafx.h"
 #include "../src/SessionHandler.h"
-
+#include "GlobalFXCMConnection.h"
 
 class TestSessionHandler : public CppUnit::TestFixture {
 private:
@@ -23,11 +23,6 @@ private:
 	LoginParams demoLoginParams = LoginParams(configLoader.getKey("demo_account_username"),
 											  configLoader.getKey("demo_account_password"),
 											  configLoader.getKey("demo_account_connectiontype"));
-
-	LoginParams realLoginParams = LoginParams(configLoader.getKey("real_account_username"),
-												  configLoader.getKey("real_account_password"),
-												  configLoader.getKey("real_account_connectiontype"));
-
 public:
 	TestSessionHandler(){}
 	virtual ~TestSessionHandler(){}
@@ -42,39 +37,35 @@ public:
 protected:
 	void testConstructor() {
 		std::cerr << "SessionHandler:\t\t" <<  __func__ << std::endl;
-		SessionHandler realSession(realLoginParams);
-		SessionHandler demoSession(demoLoginParams);
-		CPPUNIT_ASSERT(realSession.isConnected() == false);
-		CPPUNIT_ASSERT(demoSession.isConnected() == false);
-
+		SessionHandler testSession(demoLoginParams);
+		CPPUNIT_ASSERT(testSession.isConnected() == false);
 	}
 
 	void testLoginAndLogout() {
 		std::cerr << "SessionHandler:\t\t" <<  __func__ << std::endl;
-		SessionHandler realSession(realLoginParams);
-		SessionHandler demoSession(demoLoginParams);
 
-		realSession.login();
-		demoSession.login();
+		GlobalFXCMConnection::Instance()->getSessionHandler()->login();
+		CPPUNIT_ASSERT(GlobalFXCMConnection::Instance()->getSessionHandler()->isConnected());
 
-		CPPUNIT_ASSERT(realSession.isConnected());
-		CPPUNIT_ASSERT(demoSession.isConnected());
+		GlobalFXCMConnection::Instance()->getSessionHandler()->logout();
+		CPPUNIT_ASSERT(!GlobalFXCMConnection::Instance()->getSessionHandler()->isConnected());
 
-		realSession.logout();
-		demoSession.logout();
-		CPPUNIT_ASSERT(!realSession.isConnected());
-		CPPUNIT_ASSERT(!demoSession.isConnected());
+		GlobalFXCMConnection::Instance()->getSessionHandler()->login();
+		CPPUNIT_ASSERT(GlobalFXCMConnection::Instance()->getSessionHandler()->isConnected());
+
 	}
 
 	void testResponseListener() {
 		std::cerr << "SessionHandler:\t\t" <<  __func__ << std::endl;
-		SessionHandler demoSession(demoLoginParams);
-		demoSession.login();
-		CPPUNIT_ASSERT(demoSession.isConnected());
-		CPPUNIT_ASSERT_NO_THROW(demoSession.attachResponseListener());
-		CPPUNIT_ASSERT_NO_THROW(demoSession.releaseResponseListener());
-		demoSession.logout();
-		CPPUNIT_ASSERT(!demoSession.isConnected());
+		CPPUNIT_ASSERT(GlobalFXCMConnection::Instance()->getSessionHandler()->isConnected());
+		CPPUNIT_ASSERT(GlobalFXCMConnection::Instance()->getSessionHandler()->getResponseListener() == 0);
+
+		CPPUNIT_ASSERT_NO_THROW(GlobalFXCMConnection::Instance()->getSessionHandler()->attachResponseListener());
+
+		CPPUNIT_ASSERT(GlobalFXCMConnection::Instance()->getSessionHandler()->getResponseListener() != 0);
+
+		CPPUNIT_ASSERT_NO_THROW(GlobalFXCMConnection::Instance()->getSessionHandler()->releaseResponseListener());
+		CPPUNIT_ASSERT(GlobalFXCMConnection::Instance()->getSessionHandler()->getResponseListener() == 0);
 	}
 };
 
