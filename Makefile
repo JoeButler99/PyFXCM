@@ -4,11 +4,25 @@ TEST=test/
 BUILD=build/
 SRC=src/
 CONF=conf/
-INC=-Iinclude
-LIBS=-Llib -lForexConnect -lfxmsg -lgsexpat -lgstool3 -lhttplib -llog4cplus -lpdas -lsample_tools -lyaml
-CCFLAGS=$(INC) -Wall -Werror -O3 -g -mfpmath=sse -march=native -c -std=c++11
+INC=-Iinclude -I/usr/include/python2.7
+LIBS=-Llib -lForexConnect -lfxmsg -lgsexpat -lgstool3 -lhttplib -llog4cplus -lpdas -lsample_tools -lyaml -lboost_python
+CCFLAGS=$(INC) -Wall -Werror -O3 -g -mfpmath=sse -march=native -c -std=c++11 -fpic
 CPPUNITLINKS=-lcppunit
 	
+	
+#
+#	PyFXM Python Module
+#
+python-module: $(BIN)PyFXCM.so
+
+$(BIN)PyFXCM.so: $(BUILD)PyFXCM.o
+	$(CC) -shared -Wl,-soname,"PyFXCM.so" $(INC) $(BUILD)*.o $(LIBS) -fpic -o $(BIN)PyFXCM.so
+
+$(BUILD)PyFXCM.o: sources
+	rm -rf $(BUILD)TestRunner.o $(BUILD)GlobalFXCMConnection.o
+	$(CC) $(CCFLAGS) $(SRC)PyFXCM.cpp -o $(BUILD)PyFXCM.o
+
+
 #
 #	Test Suite
 #
