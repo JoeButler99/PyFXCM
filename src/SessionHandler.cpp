@@ -7,26 +7,44 @@
 
 #include "SessionHandler.h"
 
-SessionHandler::SessionHandler(LoginParams lp) : loginParams(lp),
-								   session(CO2GTransport::createSession()),
-								   statusListener(new SessionStatusListener(session,true,0,0))
-{
-	session->subscribeSessionStatus(statusListener);
-}
+SessionHandler::SessionHandler(LoginParams lp) : loginParams(lp) {}
 
 SessionHandler::~SessionHandler() {}
 
 bool SessionHandler::login() {
-	if (!isConnected()) {
+	// TODO - Memory management here
+	if (session == 0) {
 		Helpers::debugText(loginParams.getURL());
 		Helpers::debugText(loginParams.getConnection());
+		Helpers::debugText(loginParams.getPassword());
+		Helpers::debugText(loginParams.getLogin());
 
+		session = CO2GTransport::createSession();
+		statusListener = new SessionStatusListener(session,false,"","");
+		session->subscribeSessionStatus(statusListener);
 		statusListener->reset();
-		session->login(loginParams.getLogin(),loginParams.getPassword(),loginParams.getURL(),loginParams.getConnection());
-		statusListener->waitEvents();
-		return statusListener->isConnected();
+	    session->login(loginParams.getLogin(), loginParams.getPassword(),
+	    			   loginParams.getURL(), loginParams.getConnection());
+	    return statusListener->waitEvents() && statusListener->isConnected();
 	} else {
-		return true;
+		if(isConnected()) {
+			return true;
+		} else {
+			if (session != 0 ) {
+				delete session;
+				session = 0;
+			}
+			if (statusListener != 0) {
+				statusListener->release();
+				statusListener = 0;
+			}
+			if (responseListener != 0) {
+				responseListener->release();
+				responseListener = 0;
+			}
+			login();
+			return false; // This should not be reached
+		}
 	}
 
 }
@@ -40,7 +58,14 @@ void SessionHandler::logout() {
 }
 
 bool SessionHandler::isConnected() {
-	return statusListener->isConnected();
+	// TODO - We might need to check the status of the session more carefully if things
+	// are seen to 'go stale'
+	if (statusListener == 0) {
+		Helpers::debugText("REQUESTED SESSION STATUS ON AN EMPTY STATUS LISTENER");
+		return false;
+	} else {
+		return statusListener->isConnected();
+	}
 }
 
 void SessionHandler::attachResponseListener() {
@@ -56,6 +81,7 @@ void SessionHandler::releaseResponseListener() {
 	if(responseListener != 0) {
         session->unsubscribeResponse(responseListener);
         responseListener->release();
+        responseListener = 0;
 	} else {
 		throw FXCMAPIException("Cannot release NULL Response Listener.",1,__func__,__FILE__,__LINE__);
 	}

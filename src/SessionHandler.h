@@ -38,10 +38,9 @@ public:
 	void releaseResponseListener();
 
 private:
-	LoginParams & loginParams;
-	IO2GSession * session;
-	SessionStatusListener * statusListener;
+	LoginParams loginParams;
+	IO2GSession * session = 0;
+	SessionStatusListener * statusListener = 0;
 	ResponseListener * responseListener = 0;
-
 };
 

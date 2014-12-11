@@ -36,16 +36,15 @@
 #include "TestOptionParams.h"
 #include "TestSessionHandler.h"
 #include "TestPriceCollector.h"
-
+#include "GlobalFXCMConnection.h"
 
 int main(int argc, char **argv) {
-
 
     std::cout << "Creating Test Suites:" << std::endl;
     CppUnit::TextUi::TestRunner runner;
     CppUnit::TestResultCollector result;
 
-
+    GlobalFXCMConnection::Instance()->getSessionHandler()->login();
 
     runner.addTest(TestSessionHandler::suite());
     runner.addTest(TestFXCMAPIException::suite());

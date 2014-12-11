@@ -17,11 +17,12 @@ public:
 	SessionHandler* getSessionHandler();
 
 private:
-	GlobalFXCMConnection() : mSessionHandler(0) {};
-	GlobalFXCMConnection(GlobalFXCMConnection const&) : mSessionHandler(0) {};
+	GlobalFXCMConnection() : mSessionHandler(0), mLoginParams(0) {};
+	GlobalFXCMConnection(GlobalFXCMConnection const&) : mSessionHandler(0), mLoginParams(0) {};
 	GlobalFXCMConnection& operator=(GlobalFXCMConnection const&);
-	static GlobalFXCMConnection* instance;
-	SessionHandler* mSessionHandler;
+	static GlobalFXCMConnection * instance;
+	SessionHandler * mSessionHandler;
+	LoginParams * mLoginParams;
 
 };
 
