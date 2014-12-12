@@ -70,6 +70,9 @@ bool PriceCollector::collectData() {
 	    } while (dtLatest - mOptionParams.getDateFrom() > 0.0001);
 		mSessionHandler.releaseResponseListener();
 		Helpers::debugText("Release Response Listener");
+		// reverse the vector which is currently newest to oldest
+		std::reverse(std::begin(mDataRecords), std::end(mDataRecords));
+
 		return true;
 	} else {
 		Helpers::debugText("Connection attempt failed",true);
@@ -85,17 +88,21 @@ void PriceCollector::assignDataRecords(IO2GSession *session, IO2GResponse *respo
 		if (reader) {
 			for (int ii = reader->size() - 1; ii >= 0; ii--) {
 				if (reader->isBar()) {
-					mDataRecords.push_back(PriceDataRecord(mOptionParams.getInstrument(),
-														   reader->getDate(ii),
-														   mOptionParams.getTimeframe(),
-														   reader->getBidOpen(ii),
-														   reader->getBidHigh(ii),
-														   reader->getBidLow(ii),
-														   reader->getBidClose(ii),
-														   reader->getAskOpen(ii),
-														   reader->getAskHigh(ii),
-														   reader->getAskLow(ii),
-														   reader->getAskClose(ii)));
+					if (mDataRecords.size() > 0 && reader->getDate(ii) == mDataRecords.back().getStartTime()) {
+						// Duplicate record here
+					} else {
+						mDataRecords.push_back(PriceDataRecord(mOptionParams.getInstrument(),
+															   reader->getDate(ii),
+															   mOptionParams.getTimeframe(),
+															   reader->getBidOpen(ii),
+															   reader->getBidHigh(ii),
+															   reader->getBidLow(ii),
+															   reader->getBidClose(ii),
+															   reader->getAskOpen(ii),
+															   reader->getAskHigh(ii),
+															   reader->getAskLow(ii),
+															   reader->getAskClose(ii)));
+					}
 				}
 			}
 		}

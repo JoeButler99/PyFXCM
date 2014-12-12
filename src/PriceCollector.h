@@ -12,6 +12,8 @@
 #include "PriceDataRecord.h"
 #include "SessionHandler.h"
 #include "Helpers.h"
+#include <iterator>
+#include <algorithm>
 
 class PriceCollector {
 private:

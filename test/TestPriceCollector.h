@@ -93,7 +93,36 @@ protected:
 
 	void testGetDataRecords() {
 		std::cerr << "PriceCollector:\t" <<  __func__ << std::endl;
-		CPPUNIT_ASSERT(false);
+		OptionParams   options;
+		options.setInstrument("EUR/USD");
+		options.setTimeframe("H1");
+		options.setDateFrom("2014-01-01T00:00:00");
+		options.setDateTo("2014-02-01T00:00:00");
+
+		PriceCollector priceCollector = PriceCollector(*GlobalFXCMConnection::Instance()->getSessionHandler(),options);
+		CPPUNIT_ASSERT(priceCollector.hasValidOptions());
+		CPPUNIT_ASSERT(priceCollector.getDataRecords().size() == 0);
+		CPPUNIT_ASSERT(priceCollector.collectData());
+		CPPUNIT_ASSERT(priceCollector.getDataRecords().size() > 300);
+		bool first = true;
+		double startTime = 0;
+		for (unsigned int i = 0; i < priceCollector.getDataRecords().size(); i ++) {
+			const PriceDataRecord & pdr = priceCollector.getDataRecords().at(i);
+			if (first) {
+				first = false;
+				startTime = pdr.getStartTime();
+			} else {
+				// Check the records go in order
+				CPPUNIT_ASSERT(pdr.getStartTime() > startTime);
+				startTime = pdr.getStartTime();
+			}
+			CPPUNIT_ASSERT(pdr.getTimeframe() == "H1");
+			CPPUNIT_ASSERT(pdr.getAskHigh() >= pdr.getAskLow());
+			CPPUNIT_ASSERT(pdr.getBidHigh() >= pdr.getBidLow());
+			CPPUNIT_ASSERT(pdr.getInstrument() == "EUR/USD");
+		}
+
+
 	}
 };
 

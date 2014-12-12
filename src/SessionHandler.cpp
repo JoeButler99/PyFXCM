@@ -61,7 +61,6 @@ bool SessionHandler::isConnected() {
 	// TODO - We might need to check the status of the session more carefully if things
 	// are seen to 'go stale'
 	if (statusListener == 0) {
-		Helpers::debugText("REQUESTED SESSION STATUS ON AN EMPTY STATUS LISTENER");
 		return false;
 	} else {
 		return statusListener->isConnected();

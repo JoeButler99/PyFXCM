@@ -10,11 +10,11 @@
 
 class PriceDataRecord {
 private:
-	const std::string mInstrument;
-	const DATE mStartTime;
-	const std::string mTimeframe;
-	const double mBidOpen, mBidHigh, mBidLow, mBidClose;
-	const double mAskOpen, mAskHigh, mAskLow, mAskClose;
+	std::string mInstrument;
+	DATE mStartTime;
+	std::string mTimeframe;
+	double mBidOpen, mBidHigh, mBidLow, mBidClose;
+	double mAskOpen, mAskHigh, mAskLow, mAskClose;
 
 public:
 	PriceDataRecord(std::string instrument, DATE startTime, std::string timeframe,
