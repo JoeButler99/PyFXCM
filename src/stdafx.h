@@ -30,3 +30,4 @@
 
 double const NaN = std::numeric_limits<double>::quiet_NaN();
 const bool debugMode = false;
+const std::string sem_ver_string = "0.0.1";

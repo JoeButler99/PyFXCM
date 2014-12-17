@@ -8,7 +8,15 @@ INC=-Iinclude -I/usr/include/python2.7
 LIBS=-Llib -lForexConnect -lfxmsg -lgsexpat -lgstool3 -lhttplib -llog4cplus -lpdas -lsample_tools -lyaml -lboost_python
 CCFLAGS=$(INC) -Wall -Werror -O3 -g -mfpmath=sse -march=native -c -std=c++11 -fpic
 CPPUNITLINKS=-lcppunit
-	
+
+
+#
+#	Install the python module
+#
+install: /usr/local/lib/python2.7/dist-packages/PyFXCM.so
+
+/usr/local/lib/python2.7/dist-packages/PyFXCM.so: python-module
+	cp $(BIN)PyFXCM.so /usr/local/lib/python2.7/dist-packages/PyFXCM.so
 	
 #
 #	PyFXM Python Module

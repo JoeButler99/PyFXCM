@@ -4,13 +4,13 @@
  *  Created on: 9 Dec 2014
  *      Author: joe
  */
-
 #include <boost/python.hpp>
+#include "stdafx.h"
+#include "LoginParams.h"
 
 
-
-double version() {
-	return 1.0;
+std::string version() {
+	return sem_ver_string;
 }
 
 

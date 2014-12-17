@@ -24,10 +24,10 @@ cd samples/cpp/sample_tools/
 ./fxbuild.sh
 cp lib/libsample_tools.so ../../../../lib/
 
-print_in_colour "Install libyaml dev library"
-sudo apt-get install libyaml-dev
+print_in_colour "Install libyaml dev library and libboost-python-dev"
+sudo apt-get install libyaml-dev libboost-python-dev
 
-print_in_colour "Install libyaml dev library"
+print_in_colour "Removing downloaded libraries"
 rm -rf ForexConnectAPI-1.3.1*
 
 
