@@ -25,13 +25,23 @@ bool is_connected() {
 	else { return sessionHandler->isConnected(); }
 }
 
+void disconnect() {
+	if (sessionHandler != 0) {
+		sessionHandler->logout();
+		delete sessionHandler;
+		sessionHandler = 0;
+	}
+}
+
 
 void connect_with_params(LoginParams lp) {
 	if (sessionHandler == 0) {
 		sessionHandler = new SessionHandler(lp);
 		sessionHandler->login();
 	} else {
-
+		disconnect();
+		sessionHandler = new SessionHandler(lp);
+		sessionHandler->login();
 	}
 }
 
@@ -49,4 +59,5 @@ BOOST_PYTHON_MODULE(PyFXCM) {
 	boost::python::def("version", version);
 	boost::python::def("is_connected", is_connected);
 	boost::python::def("connect_with_params", connect_with_params);
+	boost::python::def("disconnect", disconnect);
 }

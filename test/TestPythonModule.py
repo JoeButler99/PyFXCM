@@ -43,9 +43,17 @@ class TestPyFXCMSessionHandler(unittest.TestCase):
             self.assertEqual(PyFXCM.is_connected(), False)
             PyFXCM.connect_with_params(login_params)
             self.assertEqual(PyFXCM.is_connected(), True)
+            PyFXCM.disconnect()
+            self.assertEqual(PyFXCM.is_connected(), False)
+            PyFXCM.connect_with_params(login_params)
+            self.assertEqual(PyFXCM.is_connected(), True)
+            PyFXCM.disconnect()
+            self.assertEqual(PyFXCM.is_connected(), False)
+
         except IOError:
-            raise Exception("could not open yaml config file")
-        
+            raise Exception("Could not open yaml config file. Did you create a config file in config/config.yaml?")
+
+ 
         
 if __name__ == '__main__':
     print PyFXCM.__dict__
