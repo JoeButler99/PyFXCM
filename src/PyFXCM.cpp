@@ -7,17 +7,32 @@
 #include <boost/python.hpp>
 #include "stdafx.h"
 #include "LoginParams.h"
+#include "SessionHandler.h"
+
+// Global objects
+SessionHandler * sessionHandler = 0;
 
 
 
-
-void set_login_params(std::string login, std::string password, std::string connection , std::string url) {
-
+// Top level functions
+std::string version() {
+	return sem_ver_string;
 }
 
 
-std::string version() {
-	return sem_ver_string;
+bool is_connected() {
+	if (sessionHandler == 0) {  return false; }
+	else { return sessionHandler->isConnected(); }
+}
+
+
+void connect_with_params(LoginParams lp) {
+	if (sessionHandler == 0) {
+		sessionHandler = new SessionHandler(lp);
+		sessionHandler->login();
+	} else {
+
+	}
 }
 
 
@@ -32,4 +47,6 @@ BOOST_PYTHON_MODULE(PyFXCM) {
 	;
 
 	boost::python::def("version", version);
+	boost::python::def("is_connected", is_connected);
+	boost::python::def("connect_with_params", connect_with_params);
 }

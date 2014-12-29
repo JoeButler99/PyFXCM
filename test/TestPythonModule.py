@@ -32,8 +32,24 @@ class TestPyFXCMLoginParams(unittest.TestCase):
         self.assertEqual(l2.get_url(), "http://www.fxcorporate.com/Hosts.jsp")
         self.assertEqual(l3.get_url(), "www.google.co.uk")
         
-
+class TestPyFXCMSessionHandler(unittest.TestCase):
+    def test_connect_with_params(self):
+        try:
+            with open('config/config.yaml','r') as f:
+                yaml_config = yaml.load(f.read())
+            login_params = PyFXCM.LoginParams(yaml_config['demo_account_username'],
+                                              yaml_config['demo_account_password'],
+                                              yaml_config['demo_account_connectiontype'])
+            self.assertEqual(PyFXCM.is_connected(), False)
+            PyFXCM.connect_with_params(login_params)
+            self.assertEqual(PyFXCM.is_connected(), True)
+        except IOError:
+            raise Exception("could not open yaml config file")
         
         
 if __name__ == '__main__':
-    unittest.main()
+    print PyFXCM.__dict__
+    
+    print "Running Tests"
+    unittest.main(verbosity = 2)
+    
